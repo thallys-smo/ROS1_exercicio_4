@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name = "simples_robot">
+
+<!-- Definição dos parametros do modelo -->
+
+    <!-- Geometria: Link 0 (Base) -->
+    <xacro:property name = "link_0_lenght" value = "0.05" />
+    <xacro:property name = "link_0_radius" value = "0.2" />
+
+    <!-- Geometria: Link 1 -->
+    <xacro:property name = "link_1_lenght" value = "0.5" />
+    <xacro:property name = "link_1_radius" value = "0.04" />
+
+    <!-- Geometria: Link 2 -->
+    <xacro:property name = "link_2_lenght" value = "1.0" />
+    <xacro:property name = "link_2_height" value = "0.1" />
+    <xacro:property name = "link_2_width"  value = "0.1" />
+
+    <!-- Geometria: Junta 1 (Revolucao) (Entre o link 0 e link 1) -->
+    <xacro:property name = "limits_revolute_upper"    value = "3.14" />
+    <xacro:property name = "limits_revolute_lower"    value = "-3.14" />
+    <xacro:property name = "limits_revolute_velocity" value = "3.14" />
+    <xacro:property name = "limits_revolute_effort"   value = "300" />
+
+    <!-- Geometria: Junta 2 (Prismatica) (Entre o link 1 e link 2) -->
+    <xacro:property name = "limits_prismatic_upper"    value = "3.14" />
+    <xacro:property name = "limits_prismatic_lower"    value = "-3.14" />
+    <xacro:property name = "limits_prismatic_velocity" value = "3.14" />
+    <xacro:property name = "limits_prismatic_effort"   value = "300" />
+
+<!-- Incluido propriedades do material: cores -->
+<xacro:include filename = "$(find exercicio_4)/urdf/material_color.xacro" />
+    
+    <!-- Link 0 -->
+    <link name="link_0">
+        <visual>
+            <geometry>
+                <cylinder length="${link_0_lenght}" 
+                          radius="${link_0_radius}"/>
+            </geometry>
+			<!-- Origem: o quadro de referência do elemento visual em relação ao quadro de referência do link  -->
+			<!-- Angulos rpy - roll, pitch e yaw  -->
+			<!-- Eixos xyz -->
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+            <!-- Sem rotações e deslocamentos -->
+			<material name="blue"/>			
+        </visual>
+    </link>
+
+    <!-- Junta 1 -->
+    <joint name = "joint_1" type = "revolute">
+        <parent link = "link_0"/>  <!-- Link 0: -->
+        <child  link = "link_1"/>  <!-- Link 2: -->
+        <origin xyz = "0 0 ${link_0_lenght/2}"/>    <!-- Origem em xy = 0 e z =0.25 -->
+        <axis   xyz = "0 0 1"/>       <!-- Rotaciona em Z -->
+        <limit effort   = "${limits_revolute_effort}"
+               velocity = "${limits_revolute_velocity}"
+               lower    = "${limits_revolute_lower}"
+               upper    = "${limits_revolute_upper}"/>
+    </joint>  
+
+    <!-- Link 1 -->
+    <link name="link_1">
+        <visual>
+            <geometry>
+                <cylinder length="${link_1_lenght}" 
+                          radius="${link_1_radius}"/>
+            </geometry>
+			<!-- Origem: o quadro de referência do elemento visual em relação ao quadro de referência do link  -->
+			<!-- Angulos rpy - roll, pitch e yaw  -->
+			<!-- Eixos xyz -->
+			<origin rpy="0 0 0" xyz="0 0 ${link_1_lenght/2}"/>
+            <!-- Sem rotações e deslocamentos -->
+			<material name="red"/>			
+        </visual>
+    </link>
+
+    <!-- Junta 2 -->
+    <joint name = "joint_2" type = "prismatic">
+        <parent link = "link_1"/>  <!-- Link 0: -->
+        <child  link = "link_2"/>  <!-- Link 2: -->
+        <origin xyz = "0 0 ${link_1_lenght/2}"/>   
+        <axis   xyz = "0 1 0"/>       <!-- Rotaciona em Z -->
+        <limit effort   = "${limits_prismatic_effort}"
+               velocity = "${limits_prismatic_velocity}"
+               lower    = "${limits_prismatic_lower}"
+               upper    = "${limits_prismatic_upper}"/>
+    </joint>  
+
+     <!-- Link 2 -->
+    <link name="link_2">
+        <visual>
+            <geometry>
+                <box size="${link_2_width} ${link_2_lenght} ${link_2_height}"/>
+            </geometry>
+			<!-- Origem: o quadro de referência do elemento visual em relação ao quadro de referência do link  -->
+			<!-- Angulos rpy - roll, pitch e yaw  -->
+			<!-- Eixos xyz -->
+			<origin rpy="0 0 0" xyz="0 0 ${link_2_height/2}"/>
+            <!-- Sem rotações e deslocamentos -->
+			<material name="green"/>			
+        </visual>
+    </link>
+
+
+</robot>

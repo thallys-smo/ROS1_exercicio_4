@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<robot>
+    <!-- Material Preto -->
+    <material name = "black">
+        <color rgba = "0.0 0.0 0.0 1.0"/>
+    </material>
+
+    <!-- Material Azul -->
+    <material name = "blue">
+        <color rgba = "0.0 0.0 0.9 1.0"/>
+    </material>
+
+    <!-- Material Verde -->
+    <material name = "green">
+        <color rgba = "0.0 0.9 0.0 1.0"/>
+    </material>
+
+    <!-- Material Vermelho -->
+    <material name = "red">
+        <color rgba = "0.9 0.0 0.0 1.0"/>
+    </material>
+
+    <!-- Material Branco -->
+    <material name = "white">
+        <color rgba = "1.0 1.0 1.0 1.0"/>
+    </material>
+
+</robot>
